@@ -226,56 +226,7 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           console.log(this.form);
-          // console.log(this.form.movie_data.toLocaleDateString('ja-JP'));
-          // if (this.files.length !== 0) {
-          //   // 赋值给formData
-          //   let formData = new FormData()
-          //   formData.append('file', this.files[0].raw)
-          //   http.post('http://127.0.0.1:3007/upload', formData)
-          //     .then((res) => {
-          //     })
-          //     .catch((error) => {
-          //       console.log('失敗')
-          //       console.log(error)
-          //     })
-          // }
-
-          // if (this.files.length > 0) {
-          //   const newImageName = this.files[0].name.slice(0, this.files[0].name.length - 4)
-
-          //   this.form.goods_name = newImageName
-
-          //   update2({
-          //     params: {
-          //       goods_name: this.form.goods_name,
-          //       goods_id: this.form.goods_id,
-          //     }
-          //   }).then(res => {
-          //     if (res.data.status == 200) {
-          //       this.getUserList()
-          //     } else {
-          //     }
-          //   }).catch(err => {
-          //     console.log(err);
-          //   })
-          // }
-
-          // update1({
-          //   params: {
-          //     goods_namej: this.form.goods_namej,
-          //     goods_price: this.form.goods_price,
-          //     goods_amount: this.form.goods_amount,
-          //     goods_id: this.form.goods_id,
-          //   }
-          // }).then(res => {
-
-          //   if (res.data.status == 200) {
-          //     this.getUserList()
-          //   } else {
-          //   }
-          // }).catch(err => {
-          //   console.log(err);
-          // })
+          //データをfirebaseに追加
 
           this.$refs.form.resetFields()
           this.dialogVisible = false
