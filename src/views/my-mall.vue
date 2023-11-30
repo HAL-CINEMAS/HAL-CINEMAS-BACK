@@ -2,7 +2,7 @@
   <div class="manage">
     <el-button type="primary" @click="add">+ 追加</el-button>
     <!-- 追加 -->
-    <el-dialog title="詳細" :visible.sync="dialogVisible" :before-close="handleClose" width="30%">
+    <el-dialog title="詳細" :visible.sync="dialogVisible" :before-close="handleClose" width="500px">
       <el-form :inline="true" ref="form" :rules="rules" :model="form" class="demo-form-inline" label-width="120px">
         <el-form-item label="ID" prop="movie_id">
           <el-input v-if="this.form.goods_name" v-model="form.goods_id" disabled="disabled"></el-input>
@@ -40,8 +40,8 @@
         <el-form-item label="解説" prop="movie_explain">
           <el-input v-model="form.movie_explain"></el-input>
         </el-form-item>
-        <el-form-item label="上映情報管理" prop="movie_schedule">
-          <!-- <el-input v-model="form.goods_amount"></el-input> -->
+        <el-form-item label="上映情報" prop="movie_schedule">
+          <el-button type="primary" @click="schedule">設定</el-button>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -51,8 +51,46 @@
     </el-dialog>
 
     <!-- スケジュール -->
-
-    <div class="tab-content">
+    <el-dialog title="上映情報" :visible.sync="dialogVisible2" width="750px">
+      <el-form :inline="true" ref="form" :rules="rules" :model="form2" class="demo-form-inline" label-width="90px">
+        <el-form-item label="上演時間" prop="day">
+          <el-date-picker type="date" v-model="form2.day" style="width: 100%;"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="スクリーン" prop="screen">
+          <el-select v-model="form2.screen">
+            <el-option label="L1" value="L1"></el-option>
+            <el-option label="L2" value="L2"></el-option>
+            <el-option label="L3" value="L3"></el-option>
+            <el-option label="M1" value="M1"></el-option>
+            <el-option label="M2" value="M2"></el-option>
+            <el-option label="S1" value="S1"></el-option>
+            <el-option label="S2" value="S2"></el-option>
+            <el-option label="S3" value="S3"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="開始時間" prop="timeStart">
+          <el-time-picker v-model="form2.timeStart" style="width: 100%;"></el-time-picker>
+        </el-form-item>
+        <el-form-item label="終了時間" prop="timeEnd">
+          <el-time-picker v-model="form2.timeEnd" style="width: 100%;"></el-time-picker>
+        </el-form-item>
+      </el-form>
+      <el-table :data="form.movie_schedule" style="width: 100%">
+        <el-table-column prop="day" label="上映時間" width="180">
+        </el-table-column>
+        <el-table-column prop="screen" label="スクリーン" width="180">
+        </el-table-column>
+        <el-table-column prop="timeStart" label="開始時間">
+        </el-table-column>
+        <el-table-column prop="timeEnd" label="終了時間">
+        </el-table-column>
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="success" @click="addSchedule">追加</el-button>
+        <el-button type="primary" @click="dialogVisible2 = false">確認</el-button>
+      </span>
+    </el-dialog>
+    <div class="tab-content" style="width: 1200px;">
       <el-table stripe :data="movieList" style="width: 100%" height="100%">
         <el-table-column prop="name" label="">
           <template slot-scope="scope">
@@ -76,7 +114,7 @@
             <span>{{ truncateText(scope.row.explain, 50) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="180">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)">編集</el-button>
             <el-button size="mini" type="danger">削除</el-button>
@@ -100,6 +138,7 @@ export default {
       imageUrl2: '',
       files: [],
       dialogVisible: false,
+      dialogVisible2: false,
       form: {
         movie_id: '',
         movie_img: '',
@@ -109,7 +148,7 @@ export default {
         movie_regulator: '',
         movie_performers: '',
         movie_explain: '',
-        movie_schedule: ''
+        movie_schedule: []
       },
       rules: {
         goods_namej: [
@@ -121,13 +160,31 @@ export default {
         goods_amount: [
           { required: true, message: '在庫数を入力してください' }
         ],
+        // day: [
+        //   { required: true, message: '上映時間を選択してください' }
+        // ],
+        // screen: [
+        //   { required: true, message: 'スクリーンを選択してください' }
+        // ],
+        // timeStart: [
+        //   { required: true, message: '開始時間を選択してください' }
+        // ],
+        // timeEnd: [
+        //   { required: true, message: '終了時間を選択してください' }
+        // ],
         goods_name: []
       },
       tableData: [],
       movieList: [],
       modulButton: 0,
       idPlus: 0,
-      imgName: ''
+      imgName: '',
+      form2: {
+        day: '',
+        screen: '',
+        timeStart: '',
+        timeEnd: ''
+      }
     }
   },
   methods: {
@@ -141,11 +198,28 @@ export default {
     handlePreview() {
       console.log('a');
     },
+    schedule() {
+      this.dialogVisible2 = true
+    },
     truncateText(text, maxLength) {
       if (text.length > maxLength) {
         return text.slice(0, 30) + '...';
       }
       return text;
+    },
+    addSchedule() {
+      let newObj = {
+        day: '',
+        screen: '',
+        timeStart: '',
+        timeEnd: ''
+      }
+      newObj.day = this.formatDateToJP(this.form2.day)
+      newObj.screen = this.form2.screen
+      newObj.timeStart = this.getTimeFromDate(this.form2.timeStart)
+      newObj.timeEnd = this.getTimeFromDate(this.form2.timeEnd)
+      this.form.movie_schedule.push(newObj)
+      this.form2 = {}
     },
     // end图片部分
     submit() {
@@ -203,10 +277,10 @@ export default {
           //   console.log(err);
           // })
 
-          // this.$refs.form.resetFields()
-          // this.dialogVisible = false
+          this.$refs.form.resetFields()
+          this.dialogVisible = false
 
-          // this.close()
+          this.close()
         }
       })
 
@@ -280,6 +354,21 @@ export default {
         this.files = this.files.splice(1, 1)
       }
 
+    },
+    getTimeFromDate(dateObject) {
+      const hours = String(dateObject.getHours()).padStart(2, '0');
+      const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+      const seconds = String(dateObject.getSeconds()).padStart(2, '0');
+
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+      return formattedTime;
+    },
+    formatDateToJP(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+
+      return `${year}年${month}月${day}日`;
     }
   },
   created() {

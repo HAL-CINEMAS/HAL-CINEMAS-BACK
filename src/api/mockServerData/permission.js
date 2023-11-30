@@ -19,37 +19,37 @@ export default {
             {
               path: '/mall',
               name: 'mall',
-              label: '商品管理',
+              label: '映画管理',
               icon: 'box',
               url: 'my-mall.vue'
             },
-            {
-              path: '/user',
-              name: 'user',
-              label: '会員管理',
-              icon: 'user',
-              url: 'my-user.vue'
-            },
-            {
-              label: 'その他',
-              icon: 'location',
-              children: [
-                {
-                  path: '/page1',
-                  name: 'page1',
-                  label: 'マイページ',
-                  icon: 'setting',
-                  url: 'my-pageone.vue'
-                },
-                {
-                  path: '/page2',
-                  name: 'page2',
-                  label: '開発中',
-                  icon: 'setting',
-                  url: 'my-pagetwo.vue'
-                }
-              ]
-            }
+            // {
+            //   path: '/user',
+            //   name: 'user',
+            //   label: '会員管理',
+            //   icon: 'user',
+            //   url: 'my-user.vue'
+            // },
+            // {
+            //   label: 'その他',
+            //   icon: 'location',
+            //   children: [
+            //     {
+            //       path: '/page1',
+            //       name: 'page1',
+            //       label: 'マイページ',
+            //       icon: 'setting',
+            //       url: 'my-pageone.vue'
+            //     },
+            //     {
+            //       path: '/page2',
+            //       name: 'page2',
+            //       label: '開発中',
+            //       icon: 'setting',
+            //       url: 'my-pagetwo.vue'
+            //     }
+            //   ]
+            // }
           ],
           token: 'admin',
           message: '获取成功'
