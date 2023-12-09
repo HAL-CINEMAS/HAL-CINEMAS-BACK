@@ -4,13 +4,13 @@
     <!-- 追加 -->
     <el-dialog title="詳細" :visible.sync="dialogVisible" :before-close="handleClose" width="500px">
       <el-form :inline="true" ref="form" :rules="rules" :model="form" class="demo-form-inline" label-width="120px">
-        <el-form-item label="ID" prop="movie_id">
-          <el-input v-if="this.form.goods_name" v-model="form.goods_id" disabled="disabled"></el-input>
-          <el-input v-else v-model="this.form.movie_id" disabled="disabled"></el-input>
+        <el-form-item label="ID" prop="movieId">
+          <el-input v-if="this.form.movieId" v-model="form.movieId" disabled="disabled"></el-input>
+          <el-input v-else v-model="this.form.movieId" disabled="disabled"></el-input>
         </el-form-item>
-        <el-form-item label="写真" prop="movie_img">
-          <img v-if="this.form.movie_img" :src="require(`../assets/images/${this.form.movie_img}`)" alt=""
-            style="margin-left: 30px;width: 80px;height: 100px;">
+        <el-form-item label="写真" prop="img">
+          <img v-if="this.form.img" :src="require(`../assets/images/${this.form.img}`)" alt=""
+            style="margin-left: 30px;width: 80px;height: 120px;">
           <img v-else src="../assets/images/picture.png" alt="" style="margin-left: 35px;width: 105px;height: 105px;">
           <el-upload class="avatar-uploader" action="http://127.0.0.1:3007/upload" :show-file-list="false"
             :on-preview="handlePreview" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
@@ -19,28 +19,28 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="タイトル" prop="movie_title">
-          <el-input v-model="form.movie_title"></el-input>
+        <el-form-item label="タイトル" prop="title">
+          <el-input v-model="form.title"></el-input>
         </el-form-item>
-        <el-form-item label="副タイトル" prop="movie_subtitle">
-          <el-input v-model="form.movie_subtitle"></el-input>
+        <el-form-item label="副タイトル" prop="subtitle">
+          <el-input v-model="form.subtitle"></el-input>
         </el-form-item>
-        <el-form-item label="公開" prop="movie_data">
+        <el-form-item label="公開" prop="data">
           <div class="block">
-            <el-date-picker v-model="form.movie_data" type="date" placeholder="选择日期">
+            <el-date-picker v-model="form.data" type="date" placeholder="选择日期">
             </el-date-picker>
           </div>
         </el-form-item>
-        <el-form-item label="監督" prop="movie_regulator">
-          <el-input v-model="form.movie_regulator"></el-input>
+        <el-form-item label="監督" prop="regulator">
+          <el-input v-model="form.regulator"></el-input>
         </el-form-item>
-        <el-form-item label="出演" prop="movie_performers">
-          <el-input v-model="form.movie_performers"></el-input>
+        <el-form-item label="出演" prop="performers">
+          <el-input v-model="form.performers"></el-input>
         </el-form-item>
-        <el-form-item label="解説" prop="movie_explain">
-          <el-input v-model="form.movie_explain"></el-input>
+        <el-form-item label="解説" prop="explain">
+          <el-input v-model="form.explain"></el-input>
         </el-form-item>
-        <el-form-item label="上映情報" prop="movie_schedule">
+        <el-form-item label="上映情報" prop="schedule">
           <el-button type="primary" @click="schedule">設定</el-button>
         </el-form-item>
       </el-form>
@@ -51,7 +51,7 @@
     </el-dialog>
 
     <!-- スケジュール -->
-    <el-dialog title="上映情報" :visible.sync="dialogVisible2" width="750px">
+    <el-dialog title="上映情報" :visible.sync="dialogVisible2" :before-close="handleClose2" width="750px">
       <el-form :inline="true" ref="form" :rules="rules" :model="form2" class="demo-form-inline" label-width="90px">
         <el-form-item label="上演時間" prop="day">
           <el-date-picker type="date" v-model="form2.day" style="width: 100%;"></el-date-picker>
@@ -68,11 +68,11 @@
             <el-option label="S3" value="S3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="開始時間" prop="timeStart">
-          <el-time-picker v-model="form2.timeStart" style="width: 100%;"></el-time-picker>
+        <el-form-item label="開始時間" prop="date">
+          <el-time-picker v-model="form2.date" style="width: 100%;"></el-time-picker>
         </el-form-item>
-        <el-form-item label="終了時間" prop="timeEnd">
-          <el-time-picker v-model="form2.timeEnd" style="width: 100%;"></el-time-picker>
+        <el-form-item label="終了時間" prop="end">
+          <el-time-picker v-model="form2.end" style="width: 100%;"></el-time-picker>
         </el-form-item>
       </el-form>
       <el-table :data="form.movie_schedule" style="width: 100%">
@@ -80,9 +80,9 @@
         </el-table-column>
         <el-table-column prop="screen" label="スクリーン" width="180">
         </el-table-column>
-        <el-table-column prop="timeStart" label="開始時間">
+        <el-table-column prop="date" label="開始時間">
         </el-table-column>
-        <el-table-column prop="timeEnd" label="終了時間">
+        <el-table-column prop="end" label="終了時間">
         </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
@@ -117,7 +117,7 @@
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" plain @click="handleEdit(scope.row)">編集</el-button>
-            <el-button size="mini" type="danger">削除</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">削除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -131,6 +131,8 @@
 import http from '../utils/request1'
 import { getDate1, update1, update2 } from '../api/index1'
 import fetchData from '../api/index2.js'
+import app from '../api/firebase.js'
+import { getFirestore, collection, query, where, getDocs, addDoc, deleteDoc, updateDoc, doc, docRef } from 'firebase/firestore'
 export default {
   data() {
     return {
@@ -140,14 +142,14 @@ export default {
       dialogVisible: false,
       dialogVisible2: false,
       form: {
-        movie_id: '',
-        movie_img: '',
-        movie_title: '',
-        movie_subtitle: '',
-        movie_data: '',
-        movie_regulator: '',
-        movie_performers: '',
-        movie_explain: '',
+        movieId: '',
+        img: '',
+        title: '',
+        subtitle: '',
+        data: '',
+        regulator: '',
+        performers: '',
+        explain: '',
         movie_schedule: []
       },
       rules: {
@@ -166,10 +168,10 @@ export default {
         // screen: [
         //   { required: true, message: 'スクリーンを選択してください' }
         // ],
-        // timeStart: [
+        // date: [
         //   { required: true, message: '開始時間を選択してください' }
         // ],
-        // timeEnd: [
+        // end: [
         //   { required: true, message: '終了時間を選択してください' }
         // ],
         goods_name: []
@@ -182,21 +184,53 @@ export default {
       form2: {
         day: '',
         screen: '',
-        timeStart: '',
-        timeEnd: ''
+        date: '',
+        end: '',
+        movie_id: ''
       }
     }
   },
   methods: {
+    handleDelete(e) {
+      console.log(e.id)
+      this.$confirm('確認ボタンを押すとデータは完全に削除されます、間違いがないかご確認ください', '警告', {
+        confirmButtonText: '確認',
+        cancelButtonText: 'キャンセル',
+        type: 'warning'
+      }).then(() => {
+        const db = getFirestore(app)
+        const movieRef = doc(db, 'movie', e.id)
+        deleteDoc(movieRef)
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: '削除しました!'
+            })
+            this.getMovieList()
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: 'キャンセルしました'
+            })
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'キャンセルしました'
+        })
+      })
+
+    },
     add() {
       document.body.classList.add('modal-open');
       this.dialogVisible = true
       this.modulButton = 0
       this.idPlus = this.movieList.length + 1
-      this.form.movie_id = this.idPlus
+      this.form.movieId = this.idPlus.toString()
     },
     handlePreview() {
-      console.log('a');
+      // console.log('a');
     },
     schedule() {
       this.dialogVisible2 = true
@@ -211,13 +245,13 @@ export default {
       let newObj = {
         day: '',
         screen: '',
-        timeStart: '',
-        timeEnd: ''
+        date: '',
+        end: '',
       }
       newObj.day = this.formatDateToJP(this.form2.day)
       newObj.screen = this.form2.screen
-      newObj.timeStart = this.getTimeFromDate(this.form2.timeStart)
-      newObj.timeEnd = this.getTimeFromDate(this.form2.timeEnd)
+      newObj.date = this.getTimeFromDate(this.form2.date)
+      newObj.end = this.getTimeFromDate(this.form2.end)
       this.form.movie_schedule.push(newObj)
       this.form2 = {}
     },
@@ -225,13 +259,77 @@ export default {
     submit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          console.log(this.form);
-          //データをfirebaseに追加
+          if (this.modulButton == 0) {
+            const scheduleData = {
+              data: this.form.movie_schedule,
+              movie_id: ''
+            };
+            const db = getFirestore(app);
+            addDoc(collection(db, 'movie'), this.form)
+              .then((docRef) => {
+                console.log('Document written with ID: ', docRef.id);
+                scheduleData.movie_id = docRef.id
+                addDoc(collection(db, 'schedule'), scheduleData)
+                  .then((scheduleDocRef) => {
+                    console.log('Schedule document written with ID: ', scheduleDocRef.id);
+                    this.$refs.form.resetFields()
+                    this.dialogVisible = false
 
-          this.$refs.form.resetFields()
-          this.dialogVisible = false
+                    this.close()
+                    this.getMovieList()
+                  })
+                  .catch((error) => {
+                    console.error('Error adding schedule document: ', error);
+                  });
 
-          this.close()
+              })
+              .catch((error) => {
+                console.error('Error adding document: ', error);
+              });
+          } else {
+            const docIdToUpdate = this.form.id;
+            const db = getFirestore(app);
+
+            const movieRef = doc(db, 'movie', docIdToUpdate);
+            let newForm = { ...this.form }
+            newForm.data = this.formatDate2(newForm.data)
+
+            updateDoc(movieRef, newForm)
+              .then(() => {
+                console.log('Document updated successfully!');
+              })
+              .catch((error) => {
+                console.error('Error updating document: ', error);
+              });
+
+            const scheduleRef = collection(db, 'schedule');
+            const queryRef = query(scheduleRef, where('movie_id', '==', docIdToUpdate));
+            let a = '';
+            getDocs(queryRef)
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  a = doc.id
+                });
+                const schedule = doc(db, 'schedule', a);
+                console.log(this.form);
+                updateDoc(schedule, { data: this.form.movie_schedule })
+                  .then(() => {
+                    console.log('Schedule document updated successfully!');
+                  })
+                  .catch((error) => {
+                    console.error('Error updating schedule document: ', error);
+                  });
+                this.$refs.form.resetFields()
+                this.dialogVisible = false
+                this.close()
+                this.getMovieList()
+              })
+              .catch((error) => {
+                console.error('Error getting documents: ', error);
+              });
+
+          }
+
         }
       })
 
@@ -242,18 +340,43 @@ export default {
 
     },
     close() {
-      this.dialogVisible = false
       this.imageUrl2 = ''
-      this.$refs.form.resetFields()
-      this.form = {}
-      console.log(this.form)
-      this.files = []
+      this.form = {
+        movieId: '',
+        img: '',
+        title: '',
+        subtitle: '',
+        data: '',
+        regulator: '',
+        performers: '',
+        explain: '',
+        movie_schedule: []
+      }
+      this.form2 = {
+        day: '',
+        screen: '',
+        date: '',
+        end: '',
+        movie_id: ''
+      },
+        this.files = []
+      this.dialogVisible = false
     },
     handleClose() {
       this.close()
     },
+    close2() {
+
+      this.dialogVisible2 = false
+    },
+    handleClose2() {
+      this.close2()
+    },
     handleEdit(e) {
-      this.form = JSON.parse(JSON.stringify(e))
+      // console.log(this.formatDate(e.data));
+      let newForm = { ...e }
+      // newForm.data = this.formatDate(e.data)
+      this.form = newForm
       this.modulButton = 1
       this.dialogVisible = true
     },
@@ -276,7 +399,7 @@ export default {
 
       const isJPG = file.type === 'image/jpeg' || 'image/png';
       const isLt2M = file.size / 1024 / 1024 < 2;
-      console.log(isJPG);
+      // console.log(isJPG);
 
       if (!isJPG) {
         this.$message.error('プロフィール画像のアップロードはJPG形式のみ対応しています');
@@ -287,7 +410,7 @@ export default {
       return isJPG && isLt2M;
     },
     getLocalImg(event, file) {
-      console.log(event);
+      // console.log(event);
       // 获取上传图片的本地url，用于上传前的本地预览
       let url = '';
       if (window.createObjectURL != undefined) {
@@ -299,7 +422,7 @@ export default {
       }
       this.imageUrl2 = url;
       this.files = file
-      this.form.movie_img = this.files[this.files.length - 1].name
+      this.form.img = this.files[this.files.length - 1].name
 
       if (this.files.length > 1) {
         this.files = this.files.splice(1, 1)
@@ -320,14 +443,35 @@ export default {
       const day = String(date.getDate()).padStart(2, '0');
 
       return `${year}年${month}月${day}日`;
+    },
+    getMovieList() {
+      fetchData().then((res) => {
+        console.log('res', res);
+        this.movieList = res
+        // console.log(this.movieList);
+      })
+    },
+    formatDate(inputDate) {
+      const parsedDate = inputDate.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+
+      if (parsedDate) {
+        const year = parsedDate[1];
+        const month = parsedDate[2].padStart(2, '0'); // 补足月份的零
+        const day = parsedDate[3].padStart(2, '0'); // 补足日期的零
+
+        return `${year}/${month}/${day}`;
+      } else {
+        return 'Invalid Date';
+      }
+    },
+    formatDate2(inputDate) {
+      // 将字符串形式的日期转换为 Date 对象
+      const date = new Date(inputDate);
+      return date;
     }
   },
   created() {
-    this.getUserList()
-    fetchData().then((res) => {
-      this.movieList = res
-      // console.log(this.movieList)
-    })
+    this.getMovieList()
   },
 
 }

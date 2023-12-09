@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <div class="VendingM">
+    <!-- <div class="VendingM">
       <img class="vend" src="../assets/images/vending-machine.png" alt="">
       <div class="Button">
         <i class="button" ref="refbut" :class="buttonChange(item)" v-for="item in goodsList" :key="item.id"
@@ -37,10 +37,8 @@
             <img :src="require(`../assets/images/${item}.png`)">
           </el-carousel-item>
         </el-carousel>
-        <!-- <img src="../assets/images/d0103834_19442590.jpg" alt=""> -->
       </div>
     </div>
-    <!-- <el-button @click="amountPlus">test用</el-button> -->
     <el-dialog title="お釣り" :visible.sync="dialogVisible" style="marginTop:300px" width="25%" :before-close="handleClose">
       <span class="el-icon-money"><i>￥{{ this.surplus }}</i></span>
       <span slot="footer" class="dialog-footer">
@@ -51,12 +49,11 @@
     <el-drawer title="商品一覧" :visible.sync="drawer" :direction="direction" :before-close="handleClose2">
       <div class="goodsBox">
         <div class="goodsContent" v-for="(item, index) in buysList" :key="index">
-          <!-- <img :src="require(`../assets/images/${item}.png`)" alt=""> -->
           <img :src="require(`../server/public/img/${item}.png`)" alt="" style="width: 53px; height: 108px;">
         </div>
       </div>
       <el-button type="primary" @click="takeGoods">取り出す</el-button>
-    </el-drawer>
+    </el-drawer> -->
 
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <el-form :model="loginData" :rules="rules" ref="form" class="demo-form-inline" label-width="60px">
-      <h3>管理システム
+      <h3>映画情報管理システム
       </h3>
       <el-form-item label="" prop="username">
         <i class="el-icon-user" style="font-size: 25px;margin-right: 10px;"></i>

@@ -16,7 +16,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="b"><i class="el-icon-s-check" style="color:#409eff"></i>マイページ</el-dropdown-item>
-          <el-dropdown-item command="c"><i class="el-icon-s-shop" style="color:#409eff"></i>自動販売機</el-dropdown-item>
+          <!-- <el-dropdown-item command="c"><i class="el-icon-s-shop" style="color:#409eff"></i>自動販売機</el-dropdown-item> -->
           <el-dropdown-item command="a"><i class="el-icon-switch-button"
               style="color:#409eff"></i>ログアウト</el-dropdown-item>
         </el-dropdown-menu>

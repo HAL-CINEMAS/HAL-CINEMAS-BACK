@@ -12,9 +12,12 @@ async function fetchData() {
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
-    const formattedDate = `${year}年${month}月${day}日`
+    const formattedDate = `${year}-${month}-${day}`
     const updatedData = { ...doc.data(), data: formattedDate, id: doc.id }
     datalist.push(updatedData)
+  })
+  datalist.sort((a, b) => {
+    return a.data.localeCompare(b.data)
   })
   return datalist
 }

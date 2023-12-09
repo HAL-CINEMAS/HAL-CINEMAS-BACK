@@ -17,16 +17,15 @@
             <p>場所&nbsp;&nbsp;&nbsp;:<span>名古屋</span></p>
           </div>
         </el-card>
-        <el-card class="box-card" style="height:744px; margin-top:20px; overflow: auto; text-align:center">
+        <!-- <el-card class="box-card" style="height:744px; margin-top:20px; overflow: auto; text-align:center">
           <el-table :data="buyData" style="width: 100%">
             <el-table-column v-for="(item, index) in tablelabel" :key="index" :prop="index" :label="item">
             </el-table-column>
           </el-table>
-        </el-card>
+        </el-card> -->
       </div>
     </el-col>
-    <el-col :span="16" style="padding-left:10px">
-      <!-- {{ todaySum }} -->
+    <!-- <el-col :span="16" style="padding-left:10px">
       <div class="right">
         <el-card v-for="item in countData" :key="item.name" :body-style="{ display: 'flex', padding: 0, }">
           <i class="icon" :class="`el-icon-${item.icon}`" :style="{ background: item.color }"></i>
@@ -48,7 +47,7 @@
         </el-card>
       </div>
 
-    </el-col>
+    </el-col> -->
   </el-row>
 </template>
 
@@ -129,7 +128,6 @@ export default {
   },
   created() {
     getDate1().then(({ data }) => {
-      console.log(data);
       this.vendingData = data
       let newVendingData = []
       this.vendingData.forEach(item => {
